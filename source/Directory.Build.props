@@ -13,7 +13,7 @@
 
    <ItemGroup Condition="!$(DefineConstants.Contains('FNA')) AND !$(DefineConstants.Contains('KNI'))">
        <PackageReference Include="MonoGame.Framework.DesktopGL"
-                          Version="3.8.2.1105"
+                          Version="3.8.4"
                           PrivateAssets="All" />
     </ItemGroup>
 
@@ -23,15 +23,17 @@
 
   <ItemGroup Condition="$(DefineConstants.Contains('KNI'))">
         <PackageReference Include="nkast.Xna.Framework"
-                          Version="3.12.9001" />
+                          Version="4.0.9001" />
         <PackageReference Include="nkast.Xna.Framework.Content"
-                          Version="3.12.9001" />
+                          Version="4.0.9001" />
         <PackageReference Include="nkast.Xna.Framework.Graphics"
-                          Version="3.12.9001" />
+                          Version="4.0.9001" />
+        <PackageReference Include="nkast.Xna.Framework.Audio"
+                          Version="4.0.9001" />
         <PackageReference Include="nkast.Xna.Framework.Input"
-                          Version="3.12.9001" />
+                          Version="4.0.9001" />
         <PackageReference Include="nkast.Xna.Framework.Game"
-                          Version="3.12.9001" />
+                          Version="4.0.9001" />
    </ItemGroup>
 
 </Project>

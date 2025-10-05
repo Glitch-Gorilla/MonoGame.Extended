@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <PropertyGroup>
-        <Version>4.0.4</Version>
-    </PropertyGroup>
+       <Version>5.1.0</Version>
+   </PropertyGroup>
 
     <PropertyGroup>
         <Authors>craftworkgames and contributors</Authors>

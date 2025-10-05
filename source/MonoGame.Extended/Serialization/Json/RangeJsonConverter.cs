@@ -7,6 +7,7 @@ namespace MonoGame.Extended.Serialization.Json;
 /// <summary>
 /// Converts a <see cref="Range{T}"/> value to or from JSON.
 /// </summary>
+[Obsolete("Use IntervalJsonConverter<T>.  Range<T> will be removed in 6.0")]
 public class RangeJsonConverter<T> : JsonConverter<Range<T>> where T : IComparable<T>
 {
     /// <inheritdoc />
