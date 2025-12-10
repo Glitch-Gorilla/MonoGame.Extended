@@ -17,32 +17,33 @@ namespace MonoGame.Extended.Particles.Profiles;
 public sealed class LineProfile : Profile
 {
     /// <summary>
-    /// The direction vector of the line axis.
+    /// Gets or sets the direction vector of the line axis.
     /// </summary>
-    public Vector2 Axis;
+    public Vector2 Axis { get; set; }
 
     /// <summary>
-    /// The length of the line segment.
+    /// Gets or sets the length of the line segment.
     /// </summary>
-    public float Length;
+    public float Length { get; set; }
 
     /// <summary>
-    /// The emission direction vector used when <see cref="Radiate"/> is <see cref="LineRadiation.Directional"/>
-    /// or as a scale factor when <see cref="Radiate"/> is <see cref="LineRadiation.NormalUp"/> or <see cref="LineRadiation.NormalDown"/>.
+    /// Gets or sets the emission direction vector used when <see cref="Radiate"/> is
+    /// <see cref="LineRadiation.Directional"/> or as a scale factor when <see cref="Radiate"/> is
+    /// <see cref="LineRadiation.PerpendicularUp"/> or <see cref="LineRadiation.PerpendicularDown"/>.
     /// </summary>
     /// <remarks>
     /// For <see cref="LineRadiation.Directional"/>, this vector directly specifies the particle heading direction.
-    /// For <see cref="LineRadiation.NormalUp"/> and <see cref="LineRadiation.NormalDown"/>, this vector's magnitude and sign
-    /// control the normal emission behavior. Positive values emit in the specified normal direction, while negative values
-    /// flip to the opposite direction.
+    /// For <see cref="LineRadiation.PerpendicularUp"/> and <see cref="LineRadiation.PerpendicularDown"/>, this vector's
+    /// magnitude and sign control the normal emission behavior. Positive values emit in the specified normal direction,
+    /// while negative values flip to the opposite direction.
     /// This property is ignored when <see cref="Radiate"/> is <see cref="LineRadiation.None"/>.
     /// </remarks>
-    public Vector2 Direction = Vector2.UnitY;
+    public Vector2 Direction { get; set; }= Vector2.UnitY;
 
     /// <summary>
-    /// The radiation mode that determines how particle headings are calculated.
+    /// Gets or sets the radiation mode that determines how particle headings are calculated.
     /// </summary>
-    public LineRadiation Radiate = LineRadiation.None;
+    public LineRadiation Radiate { get; set; } = LineRadiation.None;
 
     /// <summary>
     /// Computes the offset and heading for a new particle.
@@ -55,8 +56,9 @@ public sealed class LineProfile : Profile
     public override unsafe void GetOffsetAndHeading(Vector2* offset, Vector2* heading)
     {
         float value = FastRandom.Shared.NextSingle(Length * -0.5f, Length * 0.5f);
-        offset->X = Axis.X * value;
-        offset->Y = Axis.Y * value;
+        Vector2 normalizedAxis = Vector2.Normalize(Axis);
+        offset->X = normalizedAxis.X * value;
+        offset->Y = normalizedAxis.Y * value;
 
         // Calculate heading based on radiation mode
         switch (Radiate)
@@ -72,15 +74,13 @@ public sealed class LineProfile : Profile
                 break;
 
             case LineRadiation.PerpendicularUp:
-                Vector2 normalizedAxisUp = Vector2.Normalize(Axis);
-                heading->X = normalizedAxisUp.Y;
-                heading->Y = -normalizedAxisUp.X;
+                heading->X = normalizedAxis.Y;
+                heading->Y = -normalizedAxis.X;
                 break;
 
             case LineRadiation.PerpendicularDown:
-                Vector2 normalizedAxisDown = Vector2.Normalize(Axis);
-                heading->X = -normalizedAxisDown.Y;
-                heading->Y = normalizedAxisDown.X;
+                heading->X = -normalizedAxis.Y;
+                heading->Y = normalizedAxis.X;
                 break;
 
             default:

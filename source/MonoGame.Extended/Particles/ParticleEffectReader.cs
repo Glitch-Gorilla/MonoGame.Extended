@@ -23,6 +23,7 @@ namespace MonoGame.Extended.Particles;
 /// <summary>
 /// Represents a reader that deserializes a <see cref="ParticleEffect"/> from an XML configuration.
 /// </summary>
+[Obsolete("Use ParticleEffectSerializer.Deserialize.  ParticleEffectReader will be removed in 6.0.0")]
 public sealed class ParticleEffectReader : IDisposable
 {
     private readonly XmlReader _reader;
@@ -241,7 +242,7 @@ public sealed class ParticleEffectReader : IDisposable
         {
             try
             {
-#if KNI
+#if KNI || FNA
                 using FileStream stream = File.OpenRead(filePath);
                 Texture2D texture = Texture2D.FromStream(graphicsDeviceService.GraphicsDevice, stream);
 #else
@@ -533,8 +534,10 @@ public sealed class ParticleEffectReader : IDisposable
     private Modifier ReadVelocityColorModifier(XmlReader reader)
     {
         VelocityColorModifier modifier = new VelocityColorModifier();
-        modifier.StationaryColor = reader.GetAttributeVector3(nameof(VelocityColorModifier.StationaryColor));
-        modifier.VelocityColor = reader.GetAttributeVector3(nameof(VelocityColorModifier.VelocityColor));
+        Vector3 stationaryColor = reader.GetAttributeVector3(nameof(VelocityColorModifier.StationaryColor));
+        modifier.StationaryColor = new HslColor(stationaryColor.X, stationaryColor.Y, stationaryColor.Z);
+        Vector3 velocityColor = reader.GetAttributeVector3(nameof(VelocityColorModifier.VelocityColor));
+        modifier.VelocityColor = new HslColor(velocityColor.X, velocityColor.Y, velocityColor.Z);
         modifier.VelocityThreshold = reader.GetAttributeFloat(nameof(VelocityColorModifier.VelocityThreshold));
         return modifier;
     }
@@ -620,8 +623,10 @@ public sealed class ParticleEffectReader : IDisposable
         {
             case nameof(ColorInterpolator):
                 ColorInterpolator colorInterpolator = new ColorInterpolator();
-                colorInterpolator.StartValue = reader.GetAttributeVector3(nameof(ColorInterpolator.StartValue));
-                colorInterpolator.EndValue = reader.GetAttributeVector3(nameof(ColorInterpolator.EndValue));
+                Vector3 startValue = reader.GetAttributeVector3(nameof(ColorInterpolator.StartValue));
+                Vector3 endValue = reader.GetAttributeVector3(nameof(ColorInterpolator.EndValue));
+                colorInterpolator.StartValue = new HslColor(startValue.X, startValue.Y, startValue.Z);
+                colorInterpolator.EndValue = new HslColor(endValue.X, endValue.Y, endValue.Z);
                 return colorInterpolator;
 
             case nameof(HueInterpolator):

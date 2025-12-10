@@ -775,8 +775,8 @@ public class ParticleEffectReaderTests
         VelocityColorModifier modifier = Assert.IsType<VelocityColorModifier>(effect.Emitters[0].Modifiers[0]);
         Assert.Equal(60.0f, modifier.Frequency);
         Assert.Equal("VelocityColorModifier", modifier.Name);
-        Assert.Equal(Vector3.Zero, modifier.StationaryColor);
-        Assert.Equal(Vector3.Zero, modifier.VelocityColor);
+        Assert.Equal(new HslColor(0, 0, 0), modifier.StationaryColor);
+        Assert.Equal(new HslColor(0, 0, 0), modifier.VelocityColor);
         Assert.Equal(0.0f, modifier.VelocityThreshold);
     }
 
@@ -907,8 +907,8 @@ public class ParticleEffectReaderTests
         Assert.Single(modifier.Interpolators);
 
         ColorInterpolator interpolator = Assert.IsType<ColorInterpolator>(modifier.Interpolators[0]);
-        Assert.Equal(Vector3.Zero, interpolator.StartValue);
-        Assert.Equal(Vector3.Zero, interpolator.EndValue);
+        Assert.Equal(new HslColor(0, 0, 0), interpolator.StartValue);
+        Assert.Equal(new HslColor(0, 0, 0), interpolator.EndValue);
     }
 
     [Fact]

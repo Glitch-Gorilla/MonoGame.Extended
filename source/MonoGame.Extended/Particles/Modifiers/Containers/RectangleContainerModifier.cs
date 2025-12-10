@@ -19,12 +19,12 @@ public sealed class RectangleContainerModifier : Modifier
     /// <summary>
     /// Gets or sets the width of the rectangular container.
     /// </summary>
-    public int Width;
+    public int Width { get; set; }
 
     /// <summary>
     /// Gets or sets the height of the rectangular container, in units.
     /// </summary>
-    public int Height;
+    public int Height { get; set; }
 
     /// <summary>
     /// Gets or sets the coefficient of restitution (bounciness) for particle
@@ -45,7 +45,7 @@ public sealed class RectangleContainerModifier : Modifier
     ///
     /// The default value is 1.0.
     /// </remarks>
-    public float RestitutionCoefficient = 1.0f;
+    public float RestitutionCoefficient { get; set; } = 1.0f;
 
     /// <summary>
     /// Updates all particles by constraining them to the rectangular boundary.
